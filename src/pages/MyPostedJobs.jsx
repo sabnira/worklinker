@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { AuthContext } from '../providers/AuthProvider'
 import axios from 'axios'
 import { format } from 'date-fns'
+import toast from 'react-hot-toast'
 
 const MyPostedJobs = () => {
 
@@ -20,7 +21,45 @@ const MyPostedJobs = () => {
     setJobs(data)
   }
 
-  console.log(jobs);
+  // console.log(jobs);
+
+  //delete functionality
+  const handleDelete = async id => {
+    try {
+      const { data } = await axios.delete(`${import.meta.env.VITE_API_URL}/job/${id}`)
+      console.log(data);
+      toast.success('Data Deleted Successfully!!!')
+      fetchAllJobs()
+    } catch (err) {
+      console.log(err);
+      toast.error(err.message)
+    }
+  }
+
+  const modernDelete = id => {
+    toast(
+      (t) => (
+        <div className='flex gap-3 items-center'>
+
+          <div><p>Are you <b>sure?</b></p></div>
+
+          <div>
+            <button 
+            className='bg-red-400 text-white px-3 py-1 rounded-md mr-2'
+            onClick={() => {
+              toast.dismiss(t.id)
+              handleDelete(id)
+            }}>Dismiss</button>
+
+            <button
+            className='bg-green-400 text-white px-3 py-1 rounded-md' 
+            onClick={() => toast.dismiss(t.id)}>Cancel</button>
+          </div>
+
+        </div>
+      )
+    )
+  }
 
   return (
     <section className='container px-4 mx-auto pt-12'>
@@ -100,18 +139,20 @@ const MyPostedJobs = () => {
                         <td className='px-4 py-4 text-sm whitespace-nowrap'>
                           <div className='flex items-center gap-x-2'>
                             <p
-                              className={`px-3 py-1  text-blue-500 bg-blue-100/60 text-xs  rounded-full`}
+                              className={`px-3 py-1 ${job.category === 'Web Development' && 'text-blue-500 bg-blue-100/60'} ${job.category === 'Digital Marketing' && 'text-green-500 bg-green-100/60'} ${job.category === 'Graphics Design' && 'text-red-500 bg-red-100/60'}
+                              
+                              text-xs  rounded-full`}
                             >
                               {job.category}
                             </p>
                           </div>
                         </td>
                         <td className='px-4 py-4 text-sm text-gray-500  whitespace-nowrap'>
-                          {job.description.substring(0,70)}
+                          {job.description.substring(0, 18)}...
                         </td>
                         <td className='px-4 py-4 text-sm whitespace-nowrap'>
                           <div className='flex items-center gap-x-6'>
-                            <button className='text-gray-500 transition-colors duration-200   hover:text-red-500 focus:outline-none'>
+                            <button onClick={() => modernDelete(job._id)} className='text-gray-500 transition-colors duration-200   hover:text-red-500 focus:outline-none'>
                               <svg
                                 xmlns='http://www.w3.org/2000/svg'
                                 fill='none'
@@ -129,7 +170,7 @@ const MyPostedJobs = () => {
                             </button>
 
                             <Link
-                              to={`/update/1`}
+                              to={`/update/${job._id}`}
                               className='text-gray-500 transition-colors duration-200   hover:text-yellow-500 focus:outline-none'
                             >
                               <svg
