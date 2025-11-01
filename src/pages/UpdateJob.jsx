@@ -56,7 +56,7 @@ const UpdateJob = () => {
 
     try {
       //make a put request
-      await axios.put(`${import.meta.env.VITE_API_URL}/update-job`, formData)
+      await axios.put(`${import.meta.env.VITE_API_URL}/update-job/${id}`, formData)
       form.reset()
       toast.success('Data Update Successfully!!!')
       navigate('/my-posted-jobs')
