@@ -9,7 +9,7 @@ const MyBids = () => {
 
   const { user } = useContext(AuthContext)
 
-  const [bids, setbids] = useState([])
+  const [bids, setBids] = useState([])
 
   useEffect(() => {
     fetchAllBids();
@@ -18,7 +18,7 @@ const MyBids = () => {
 
   const fetchAllBids = async () => {
     const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/bids/${user?.email}`)
-    setbids(data)
+    setBids(data)
   }
 
   console.log(bids);
@@ -30,7 +30,7 @@ const MyBids = () => {
         <h2 className='text-lg font-medium text-gray-800 '>My Bids</h2>
 
         <span className='px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full '>
-          6 Bid
+          {bids.length} Bid
         </span>
       </div>
 

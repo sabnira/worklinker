@@ -62,7 +62,17 @@ const JobDetails = () => {
     if (compareAsc(new Date(), new Date(deadline)) == 1)
       return toast.error('Deadline Crossed, Bidding Forbidden!')
 
-    const bidData = { price, email, comment, deadline:startDate, jobId }
+    const bidData = {
+      price,
+      email, 
+      comment, 
+      deadline: startDate, 
+      jobId,
+      title, 
+      category, 
+      status: 'Pending',
+      buyer: buyer?.email,
+    }
 
     console.table(bidData);
 

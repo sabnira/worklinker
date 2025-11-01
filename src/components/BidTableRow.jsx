@@ -1,28 +1,34 @@
+import { format } from "date-fns";
 
 
-const BidTableRow = ({bid}) => {
+// eslint-disable-next-line react/prop-types
+const BidTableRow = ({ bid }) => {
 
-    const {title, deadline, price, category, status} = bid || {}
+    const { title, deadline, price, category, status } = bid || {}
 
     return (
         <tr>
             <td className='px-4 py-4 text-sm text-gray-500  whitespace-nowrap'>
-                E-commerce Website Development
+                {title}
             </td>
 
             <td className='px-4 py-4 text-sm text-gray-500  whitespace-nowrap'>
-                28/05/2024
+                {format(new Date(deadline), 'P')}
             </td>
 
             <td className='px-4 py-4 text-sm text-gray-500  whitespace-nowrap'>
-                $500
+                ${price}
             </td>
             <td className='px-4 py-4 text-sm whitespace-nowrap'>
                 <div className='flex items-center gap-x-2'>
                     <p
-                        className={`px-3 py-1  text-blue-500 bg-blue-100/60 text-xs  rounded-full`}
+                        className={`px-3 py-1 ${category === 'Web Development' &&
+                            'text-blue-500 bg-blue-100/60'} ${category === 'Digital Marketing' &&
+                            'text-green-500 bg-green-100/60'} ${category === 'Graphics Design' && 'text-red-500 bg-red-100/60'}
+                              
+                              text-xs  rounded-full`}
                     >
-                        Web Development
+                        {category}
                     </p>
                 </div>
             </td>
@@ -33,7 +39,7 @@ const BidTableRow = ({bid}) => {
                     <span
                         className={`h-1.5 w-1.5 rounded-full bg-yellow-500 `}
                     ></span>
-                    <h2 className='text-sm font-normal '>Pending</h2>
+                    <h2 className='text-sm font-normal '>{status}</h2>
                 </div>
             </td>
             <td className='px-4 py-4 text-sm whitespace-nowrap'>
