@@ -15,11 +15,31 @@ const BidRequests = () => {
   }, [user])
 
   const fetchAllBids = async () => {
-    const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/bid-requests/${user?.email}`)
+    const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/bids/${user?.email}?buyer=true`)
     setBids(data)
   }
 
-  console.log(bids);
+  // console.log(bids);
+
+  const handleStatusChange = async (id, prevStatus, status) => {
+
+    if (prevStatus === status || prevStatus === 'Completed')
+      return console.log('Not Allowed')
+
+    try {
+      const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/bid-status-update/${id}`, { status })
+
+      console.log(data)
+
+      //refresh ui
+      fetchAllBids()
+    } catch (err) {
+      console.log(err);
+    }
+
+
+    // console.table({id, prevStatus, status});
+  }
 
   return (
     <section className='container px-4 mx-auto my-12'>
@@ -91,10 +111,10 @@ const BidRequests = () => {
                   </tr>
                 </thead>
                 <tbody className='bg-white divide-y divide-gray-200 '>
-                  
-                {
-                  bids.map(bid => <BidRequestsTable key={bid._id} bid={bid}></BidRequestsTable>)
-                }
+
+                  {
+                    bids.map(bid => <BidRequestsTable handleStatusChange={handleStatusChange} key={bid._id} bid={bid}></BidRequestsTable>)
+                  }
 
                 </tbody>
               </table>
