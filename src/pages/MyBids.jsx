@@ -2,10 +2,12 @@ import { useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import { useEffect } from "react";
-import axios from "axios";
 import BidTableRow from "../components/BidTableRow";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const MyBids = () => {
+
+  const axiosSecure = useAxiosSecure()
 
   const { user } = useContext(AuthContext)
 
@@ -17,7 +19,7 @@ const MyBids = () => {
   }, [user])
 
   const fetchAllBids = async () => {
-    const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/bids/${user?.email}`)
+    const { data } = await axiosSecure.get(`/bids/${user?.email}`)
     setBids(data)
   }
 
@@ -30,7 +32,7 @@ const handleStatusChange = async (id, prevStatus, status) => {
       return console.log('Not Allowed')
 
     try {
-      const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/bid-status-update/${id}`, { status })
+      const { data } = await axiosSecure.patch(`/bid-status-update/${id}`, { status })
 
       console.log(data)
 
