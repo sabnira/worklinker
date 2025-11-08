@@ -1,8 +1,18 @@
-# React + Vite
+# JobHub – WorkLinker Job Marketplace
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Live Site:** https://your-live-site-link.com
 
-Currently, two official plugins are available:
+## Features
+- User authentication with Email/Password and Google Sign-in
+- Users can post jobs and manage their posted jobs (update/delete)
+- Freelancers can place bids on jobs and track their bid statuses
+- Job owners can accept or reject bids from the Bid Requests dashboard
+- Data fetching and state management handled using **TanStack Query**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠️ Tech Stack
+**Client Side:** React, React Router, React Tabs, Tailwind CSS, DaisyUI  
+**State/Data:** TanStack Query  
+**Server Side:** Node.js, Express.js  
+**Database:** MongoDB  
+**Authentication:** Firebase Authentication  
+**Tools:** JWT / Private Routes / Toast Notifications
