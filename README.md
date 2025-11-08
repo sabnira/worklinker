@@ -1,6 +1,6 @@
 # JobHub – WorkLinker Job Marketplace
 
-**Live Site:** https://your-live-site-link.com
+**Live Site:** https://glittery-sawine-3cc08a.netlify.app
 
 ## Features
 - User authentication with Email/Password and Google Sign-in
